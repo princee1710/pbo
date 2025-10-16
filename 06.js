@@ -1,3 +1,9 @@
+// Nama Kelompok:
+// 1. Muhammad Ramdani
+// 2. Aditya Eka Saputra
+// 3. Yudan Saptayana
+// 4. Abdullah Danang
+
 // ===========================
 // 1. KELAS ABSTRAK: KENDARAAN
 // ===========================
