@@ -2,9 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Retro Login OOP</title>
+    <title>Halaman Login OOP</title>
 
-    <!-- ================= CSS ================= -->
     <style>
         body {
             background: #1b1b1b;
@@ -57,7 +56,6 @@
             transition: all 0.2s ease;
         }
 
-        /* UX Button */
         button:hover {
             background: #000;
             color: #00ff9c;
@@ -76,22 +74,19 @@
 </head>
 <body>
 
-<!-- ================= LOGIN PAGE ================= -->
 <div class="container" id="loginPage">
-    <h1 class="title">RETRO LOGIN</h1>
+    <h1 class="title">HALAMAN LOGIN</h1>
     <input type="text" id="username" placeholder="Username">
     <input type="password" id="password" placeholder="Password">
     <button id="loginBtn">LOGIN</button>
 </div>
 
-<!-- ================= PROFILE PAGE ================= -->
 <div class="container hidden" id="profilePage">
     <h1 class="title">PROFILE</h1>
     <p id="welcomeText"></p>
     <button id="logoutBtn">LOGOUT</button>
 </div>
 
-<!-- ================= JAVASCRIPT (OOP) ================= -->
 <script>
     // ===== CLASS USER =====
     class User {
@@ -110,7 +105,7 @@
 
         initDefaultUser() {
             if (!localStorage.getItem(this.storageKey)) {
-                const defaultUser = new User("ramdani123", "prince12345");
+                const defaultUser = new User("ramdani123", "prince123");
                 localStorage.setItem(this.storageKey, JSON.stringify([defaultUser]));
             }
         }
