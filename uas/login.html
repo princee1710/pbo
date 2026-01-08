@@ -1,1 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Retro Login OOP</title>
 
+    <!-- ================= CSS ================= -->
+    <style>
+        body {
+            background: #1b1b1b;
+            font-family: 'Courier New', monospace;
+            color: #00ff9c;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #000;
+            border: 3px solid #00ff9c;
+            padding: 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 0 20px #00ff9c;
+        }
+
+        .title {
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff9c;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            background: #111;
+            border: 2px solid #00ff9c;
+            color: #00ff9c;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00ff9c;
+        }
+
+        button {
+            width: 95%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #00ff9c;
+            color: #000;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        /* UX Button */
+        button:hover {
+            background: #000;
+            color: #00ff9c;
+            border: 2px solid #00ff9c;
+            box-shadow: 0 0 15px #00ff9c;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ================= LOGIN PAGE ================= -->
+<div class="container" id="loginPage">
+    <h1 class="title">RETRO LOGIN</h1>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button id="loginBtn">LOGIN</button>
+</div>
+
+<!-- ================= PROFILE PAGE ================= -->
+<div class="container hidden" id="profilePage">
+    <h1 class="title">PROFILE</h1>
+    <p id="welcomeText"></p>
+    <button id="logoutBtn">LOGOUT</button>
+</div>
+
+<!-- ================= JAVASCRIPT (OOP) ================= -->
+<script>
+    // ===== CLASS USER =====
+    class User {
+        constructor(username, password) {
+            this.username = username;
+            this.password = password;
+        }
+    }
+
+    // ===== CLASS AUTH =====
+    class Auth {
+        constructor() {
+            this.storageKey = "users_db";
+            this.initDefaultUser();
+        }
+
+        initDefaultUser() {
+            if (!localStorage.getItem(this.storageKey)) {
+                const defaultUser = new User("admin", "12345");
+                localStorage.setItem(this.storageKey, JSON.stringify([defaultUser]));
+            }
+        }
+
+        login(username, password) {
+            const users = JSON.parse(localStorage.getItem(this.storageKey));
+            return users.find(
+                user => user.username === username && user.password === password
+            );
+        }
+    }
+
+    // ===== CLASS UI =====
+    class UI {
+        constructor() {
+            this.loginPage = document.getElementById("loginPage");
+            this.profilePage = document.getElementById("profilePage");
+            this.welcomeText = document.getElementById("welcomeText");
+        }
+
+        showProfile(username) {
+            this.loginPage.classList.add("hidden");
+            this.profilePage.classList.remove("hidden");
+            this.welcomeText.innerText = `Selamat datang, ${username}!`;
+        }
+
+        logout() {
+            this.profilePage.classList.add("hidden");
+            this.loginPage.classList.remove("hidden");
+        }
+    }
+
+    // ===== OBJECT =====
+    const auth = new Auth();
+    const ui = new UI();
+
+    // ===== EVENT LOGIN =====
+    document.getElementById("loginBtn").addEventListener("click", () => {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        const user = auth.login(username, password);
+
+        if (user) {
+            ui.showProfile(user.username);
+        } else {
+            alert("Username atau Password SALAH!");
+        }
+    });
+
+    // ===== EVENT LOGOUT =====
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+        ui.logout();
+    });
+</script>
+
+</body>
+</html>
